@@ -8,7 +8,21 @@
 </head>
 <body>
   <h1>Memoria Pokémon</h1>
-  <div class="game-board" id="gameBoard"></div>
+
+  <!-- MENÚ DE INICIO -->
+  <div id="start-menu">
+    <button onclick="startGame()">Jugar</button>
+  </div>
+
+  <!-- TABLERO DE JUEGO -->
+  <div class="game-board" id="gameBoard" style="display:none;"></div>
+
+  <!-- MENSAJE DE FIN -->
+  <div id="end-menu" style="display:none;">
+    <h2>¡Felicidades, ganaste!</h2>
+    <button onclick="restartGame()">Volver a jugar</button>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
