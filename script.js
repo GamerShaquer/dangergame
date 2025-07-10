@@ -67,6 +67,11 @@ function checkMatch() {
       lockBoard = false;
     }, 800);
   }
+  // Revisar si todas las cartas están volteadas
+const totalFlipped = document.querySelectorAll(".card.flip").length;
+if (totalFlipped === pokemonList.length * 2) {
+  setTimeout(showEndMenu, 500);
+}
 }
 function startGame() {
   document.getElementById("start-menu").style.display = "none";
@@ -89,8 +94,4 @@ function restartGame() {
   document.getElementById("end-menu").style.display = "none";
   document.getElementById("start-menu").style.display = "block";
 }
-// Revisar si todas las cartas están volteadas
-const totalFlipped = document.querySelectorAll(".card.flip").length;
-if (totalFlipped === pokemonList.length * 2) {
-  setTimeout(showEndMenu, 500);
-}
+
