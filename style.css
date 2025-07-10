@@ -56,3 +56,13 @@ h1 {
 .card-back {
   background: #3b4cca;        /* azul pokémon */
 }
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .game-board {
+    gap: 6px;
+    padding: 5px;
+  }
+}
