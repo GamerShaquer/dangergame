@@ -9,43 +9,40 @@ body {
 h1 {
   margin-bottom: 20px;
 }
-
+/* --- tablero igual --- */
 .game-board {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
   gap: 10px;
   max-width: 600px;
   margin: auto;
 }
 
+/* --- carta base --- */
 .card {
   position: relative;
   width: 100%;
-  padding-top: 100%; /* 1:1 ratio */
+  padding-top: 100%;        /* formato 1:1 */
   cursor: pointer;
-  perspective: 1000px;
-}
+  perspective: 1000px;      /* da profundidad al giro */
 
-.card-inner {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.6s;
+  /* --- ahora la carta completa es la que gira --- */
   transform-style: preserve-3d;
+  transition: transform 0.6s;
 }
 
-.card.flip .card-inner {
+.card.flip {               /* basta con esta regla */
   transform: rotateY(180deg);
 }
 
+/* --- caras --- */
 .card-front,
 .card-back {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   backface-visibility: hidden;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
 }
 
 .card-front {
@@ -53,9 +50,9 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: rotateY(180deg);
+  transform: rotateY(180deg); /* cara oculta al inicio */
 }
 
 .card-back {
-  background: #3b4cca; /* azul Pokémon */
+  background: #3b4cca;        /* azul pokémon */
 }

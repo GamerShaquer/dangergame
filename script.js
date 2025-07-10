@@ -3,64 +3,68 @@ const pokemonList = [
   "jigglypuff", "meowth", "psyduck", "snorlax"
 ];
 
-const getImageUrl = name => `https://img.pokemondb.net/artwork/large/${name}.jpg`;
+const getImageUrl = name =>
+  `https://img.pokemondb.net/artwork/large/${name}.jpg`;
 
 const gameBoard = document.getElementById("gameBoard");
-let cards = [];
 let flippedCards = [];
 let lockBoard = false;
 
-// Duplica y mezcla las cartas
+setupBoard();   // ----> Arrancamos
+
+/* ---------------- FUNCIONES ---------------- */
+
 function setupBoard() {
-  const selected = [...pokemonList, ...pokemonList]; // Duplicamos
-  cards = selected.sort(() => 0.5 - Math.random());
+  // Duplicamos y mezclamos
+  const mixed = [...pokemonList, ...pokemonList].sort(() => Math.random() - 0.5);
 
-  cards.forEach(name => {
-    const card = document.createElement("div");
-    card.classList.add("card");
-    card.dataset.name = name;
-
-    card.innerHTML = `
-      <div class="card-inner">
-        <div class="card-front">
-          <img src="${getImageUrl(name)}" alt="${name}" width="100%" />
-        </div>
-        <div class="card-back"></div>
-      </div>
-    `;
-
-    card.addEventListener("click", flipCard);
+  mixed.forEach(name => {
+    const card = createCard(name);
     gameBoard.appendChild(card);
   });
 }
 
-function flipCard() {
-  if (lockBoard) return;
-  if (this.classList.contains("flip")) return;
+function createCard(name) {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.dataset.name = name;
+
+  card.innerHTML = `
+    <div class="card-front">
+      <img src="${getImageUrl(name)}" alt="${name}"
+           style="width:100%;height:100%;object-fit:cover">
+    </div>
+    <div class="card-back"></div>
+  `;
+
+  card.addEventListener("click", onCardClick);
+  return card;
+}
+
+
+function onCardClick() {
+  if (lockBoard || this.classList.contains("flip")) return;
 
   this.classList.add("flip");
   flippedCards.push(this);
 
-  if (flippedCards.length === 2) {
-    checkMatch();
-  }
+  if (flippedCards.length === 2) checkMatch();
 }
 
 function checkMatch() {
-  const [card1, card2] = flippedCards;
-  const isMatch = card1.dataset.name === card2.dataset.name;
+  const [c1, c2] = flippedCards;
+  const isMatch = c1.dataset.name === c2.dataset.name;
 
   if (isMatch) {
     flippedCards = [];
+    // Si quieres comprobar fin de juego, cuenta las que quedan sin flip
   } else {
     lockBoard = true;
     setTimeout(() => {
-      card1.classList.remove("flip");
-      card2.classList.remove("flip");
+      c1.classList.remove("flip");
+      c2.classList.remove("flip");
       flippedCards = [];
       lockBoard = false;
-    }, 1000);
+    }, 800);
   }
 }
-
-setupBoard();
